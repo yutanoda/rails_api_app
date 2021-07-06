@@ -36,4 +36,3 @@ services:
       - "8080:80"
     volumes:
       - ./api/:/rails_api_app
-      - rails_api_app.conf /etc/nginx/rails_api_app.conf
