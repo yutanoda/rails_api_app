@@ -1,0 +1,39 @@
+version: '3'
+
+volumes:
+  db-data: 
+services:
+  api:
+    build:
+      context: ./api/
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3000"
+    volumes:
+      - ./api/:/rails_api_app
+    depends_on:
+      - db
+    links:
+      - db
+    stdin_open: true
+    tty: true
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '3308:3306'
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - db-data:/var/lib/mysql
+  nginx:
+    build:
+      context: ./nginx/
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    volumes:
+      - ./api/:/rails_api_app
+      - rails_api_app.conf /etc/nginx/rails_api_app.conf
