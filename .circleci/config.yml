@@ -86,11 +86,7 @@ jobs:
             mkdir -p ~/rspec
             bundle exec rails db:create db:migrate
             TEST_FILES="$(circleci tests glob \"spec/**/*_spec.rb\" | circleci tests split --split-by=timings)"
-            bundle exec rspec --require rails_helper \
-                              --color \
-                              --format progress \
-                              --format RspecJunitFormatter \
-                              --out ~/rspec/rspec.xml
+            bundle exec rspec --require rails_helper
           working_directory: api
       # collect reports
       - store_test_results:
