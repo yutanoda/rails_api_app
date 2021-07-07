@@ -2,7 +2,8 @@ test:
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: 'root'
-  port: 3306
-  host: '127.0.0.1'
-  database: ci_test
+  username: <%= ENV.fetch("MYSQL_USER", "root") %>
+  password: <%= ENV.fetch("MYSQL_USER", "password") %>
+  host: <%= ENV.fetch("MYSQL_HOST", "127.0.0.1") %>
+  port: <%= ENV.fetch("MYSQL_PORT", "3306") %>
+  database: <%= ENV.fetch("MYSQL_DATABASE", "rails_api_app_test") %>
